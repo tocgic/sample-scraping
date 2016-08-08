@@ -10,7 +10,6 @@ import javax.inject.Inject;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func0;
 import rx.schedulers.Schedulers;
 
 /**
@@ -30,12 +29,7 @@ public class MainPresenterImpl implements MainPresenter {
 
     @Override
     public void loadPhotos(int page) {
-        Observable<WebPhoto> webPhotoObservable = Observable.defer(new Func0<Observable<WebPhoto>>() {
-                                                                       @Override
-                                                                       public Observable<WebPhoto> call() {
-                                                                           return scrapWeb.getScrapPhoto(Const.URL);
-                                                                       }
-                                                                   });
+        Observable<WebPhoto> webPhotoObservable = Observable.defer(() -> scrapWeb.getScrapPhoto(Const.URL));
                 webPhotoObservable
                         .subscribeOn(Schedulers.io())
                         .map(WebPhoto::getPhotos)

@@ -53,9 +53,7 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
 
         lvRecycler.setLayoutManager(new GridLayoutManager(MainActivity.this, 3));
         lvRecycler.setAdapter(photoAdapter);
-        photoAdapter.setOnRecyclerItemClickListener((adapter1, position) -> {
-            mainPresenter.onPhotoItemClick(position);
-        });
+        photoAdapter.setOnRecyclerItemClickListener((adapter1, position) -> mainPresenter.onPhotoItemClick(position));
         photoAdapter.setOnRecyclerItemLongClickListener((adapter1, position) -> {
             mainPresenter.onPhotoItemLongClick(position);
             return true;
