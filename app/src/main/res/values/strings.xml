@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Scraping</string>
+    <string name="menu_item_copy_action_dialog">Copy</string>
+    <string name="menu_item_show_browser_action_dialog">Show Browser</string>
+    <string name="menu_item_delete_action_dialog">Delete</string>
+    <string name="message_show_browser_action">Choose WebBrowser</string>
 </resources>

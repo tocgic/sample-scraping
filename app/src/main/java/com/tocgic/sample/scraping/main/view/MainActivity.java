@@ -69,7 +69,11 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
 
     @Override
     public void showItemActionDialog(int position, String url) {
-        String[] menus = {"Copy", "Show Browser", "Delete"};
+        String[] menus = {
+                getString(R.string.menu_item_copy_action_dialog),
+                getString(R.string.menu_item_show_browser_action_dialog),
+                getString(R.string.menu_item_delete_action_dialog)};
+
         new AlertDialog.Builder(MainActivity.this)
                 .setItems(menus, (dialog, which) -> {
                     switch (which) {
@@ -79,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
                             break;
                         case 1:
                             Intent contentIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                            Intent chooserIntent = Intent.createChooser(contentIntent, "Choose WebBrowser");
+                            Intent chooserIntent = Intent.createChooser(contentIntent, getString(R.string.message_show_browser_action));
                             startActivity(chooserIntent);
                             break;
                         case 2:
