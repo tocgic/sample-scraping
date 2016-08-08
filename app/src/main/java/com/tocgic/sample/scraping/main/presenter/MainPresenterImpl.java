@@ -4,7 +4,7 @@ import com.tocgic.sample.scraping.define.Const;
 import com.tocgic.sample.scraping.main.adapter.model.PhotoDataModel;
 import com.tocgic.sample.scraping.network.ScrapWeb;
 import com.tocgic.sample.scraping.network.domain.Photo;
-import com.tocgic.sample.scraping.network.domain.WebPhoto;
+import com.tocgic.sample.scraping.network.domain.ScrapResult;
 
 import javax.inject.Inject;
 
@@ -29,10 +29,10 @@ public class MainPresenterImpl implements MainPresenter {
 
     @Override
     public void loadPhotos(int page) {
-        Observable<WebPhoto> webPhotoObservable = Observable.defer(() -> scrapWeb.getScrapPhoto(Const.URL));
+        Observable<ScrapResult> webPhotoObservable = Observable.defer(() -> scrapWeb.getScrapPhoto(Const.URL));
                 webPhotoObservable
                         .subscribeOn(Schedulers.io())
-                        .map(WebPhoto::getPhotos)
+                        .map(ScrapResult::getPhotos)
                         .filter(photos -> photos.getPhotoList() != null && !photos.getPhotoList().isEmpty())
                         .flatMap(photos -> Observable.from(photos.getPhotoList()))
                         .observeOn(AndroidSchedulers.mainThread())

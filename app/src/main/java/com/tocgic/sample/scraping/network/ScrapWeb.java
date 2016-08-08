@@ -5,7 +5,7 @@ import android.util.Log;
 import com.tocgic.sample.scraping.helper.StringUtil;
 import com.tocgic.sample.scraping.network.domain.Photo;
 import com.tocgic.sample.scraping.network.domain.Photos;
-import com.tocgic.sample.scraping.network.domain.WebPhoto;
+import com.tocgic.sample.scraping.network.domain.ScrapResult;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -31,17 +31,17 @@ public class ScrapWeb {
     public ScrapWeb() {
     }
 
-    public Observable<WebPhoto> getScrapPhoto(String webUrl) {
-        WebPhoto webPhoto = new WebPhoto();
+    public Observable<ScrapResult> getScrapPhoto(String webUrl) {
+        ScrapResult scrapResult = new ScrapResult();
 
         Photos photos = new Photos();
 
         photos.setPhotoList(getItems(webUrl));
 
-        webPhoto.setPhotos(photos);
+        scrapResult.setPhotos(photos);
 
 
-        return Observable.just(webPhoto);
+        return Observable.just(scrapResult);
     }
 
     private List<Photo> getItems(String url) {
