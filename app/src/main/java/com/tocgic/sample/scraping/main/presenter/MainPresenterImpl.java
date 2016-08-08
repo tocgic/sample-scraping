@@ -1,10 +1,13 @@
 package com.tocgic.sample.scraping.main.presenter;
 
-import com.tocgic.sample.scraping.define.Const;
 import com.tocgic.sample.scraping.main.adapter.model.PhotoDataModel;
+import com.tocgic.sample.scraping.main.data.Const;
 import com.tocgic.sample.scraping.network.ScrapWeb;
 import com.tocgic.sample.scraping.network.domain.Photo;
 import com.tocgic.sample.scraping.network.domain.ScrapResult;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import javax.inject.Inject;
 
@@ -28,8 +31,16 @@ public class MainPresenterImpl implements MainPresenter {
     }
 
     @Override
-    public void loadPhotos(int page) {
-        Observable<ScrapResult> webPhotoObservable = Observable.defer(() -> scrapWeb.getScrapPhoto(Const.URL));
+    public void loadPhotos(String url) {
+        try {
+            URL urlObj = new URL(url);
+            Const.HOST = urlObj.getProtocol()+ "://" + urlObj.getHost();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            Const.HOST = url;
+        }
+
+        Observable<ScrapResult> webPhotoObservable = Observable.defer(() -> scrapWeb.getScrapPhoto(url));
                 webPhotoObservable
                         .subscribeOn(Schedulers.io())
                         .map(ScrapResult::getPhotos)
@@ -62,6 +73,6 @@ public class MainPresenterImpl implements MainPresenter {
     }
 
     private String getUrl(Photo photo) {
-        return String.format(Const.URL2+"%s", photo.getPath());
+        return String.format("%s/%s", Const.HOST, photo.getPath());
     }
 }

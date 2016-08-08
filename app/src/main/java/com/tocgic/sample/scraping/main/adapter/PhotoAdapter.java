@@ -10,9 +10,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.tocgic.sample.scraping.R;
-import com.tocgic.sample.scraping.define.Const;
 import com.tocgic.sample.scraping.main.adapter.model.PhotoDataModel;
 import com.tocgic.sample.scraping.main.adapter.view.PhotoAdapterView;
+import com.tocgic.sample.scraping.main.data.Const;
 import com.tocgic.sample.scraping.network.domain.Photo;
 import com.tocgic.sample.scraping.views.interfaces.OnRecyclerItemClickListener;
 import com.tocgic.sample.scraping.views.interfaces.OnRecyclerItemLongClickListener;
@@ -84,10 +84,10 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
                 }
             });
 
-            String url = photo.getPath();
-            if (url != null && url.length() > 0) {
+            String path = photo.getPath();
+            if (path != null && path.length() > 0) {
                 Glide.with(context)
-                        .load(Const.URL2+url)
+                        .load(String.format("%s/%s", Const.HOST, path))
                         .centerCrop()
                         .crossFade()
                         .into(holder.ivItemPhoto);

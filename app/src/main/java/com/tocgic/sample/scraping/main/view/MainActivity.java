@@ -20,6 +20,7 @@ import com.tocgic.sample.scraping.main.adapter.PhotoAdapter;
 import com.tocgic.sample.scraping.main.adapter.view.PhotoAdapterView;
 import com.tocgic.sample.scraping.main.dagger.DaggerMainComponent;
 import com.tocgic.sample.scraping.main.dagger.MainModule;
+import com.tocgic.sample.scraping.main.data.Const;
 import com.tocgic.sample.scraping.main.presenter.MainPresenter;
 
 import javax.inject.Inject;
@@ -28,7 +29,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements MainPresenter.View {
-    private static final int FIRST_PAGE = 1;
 
     @Bind(R.id.lv_recycler)
     RecyclerView lvRecycler;
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
             return true;
         });
 
-        mainPresenter.loadPhotos(FIRST_PAGE);
+        mainPresenter.loadPhotos(Const.URL);
     }
 
     @Override

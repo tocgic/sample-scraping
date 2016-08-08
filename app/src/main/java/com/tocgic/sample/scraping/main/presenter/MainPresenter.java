@@ -5,7 +5,7 @@ package com.tocgic.sample.scraping.main.presenter;
  */
 public interface MainPresenter {
 
-    void loadPhotos(int page);
+    void loadPhotos(String url);
 
     void onPhotoItemClick(int position);
 
