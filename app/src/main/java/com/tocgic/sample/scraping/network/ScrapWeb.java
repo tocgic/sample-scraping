@@ -1,19 +1,14 @@
 package com.tocgic.sample.scraping.network;
 
-import android.util.Log;
-
-import com.tocgic.sample.scraping.helper.StringUtil;
 import com.tocgic.sample.scraping.network.domain.Photo;
 import com.tocgic.sample.scraping.network.domain.Photos;
 import com.tocgic.sample.scraping.network.domain.ScrapResult;
+import com.tocgic.sample.scraping.parser.JsoupParserForGettyimagesgallery;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -44,34 +39,18 @@ public class ScrapWeb {
         return Observable.just(scrapResult);
     }
 
+    /**
+     * parsing Photo from web url.
+     * jsoup : https://jsoup.org/cookbook/extracting-data/selector-syntax
+     * @param url
+     * @return
+     */
     private List<Photo> getItems(String url) {
-        Log.i("ScrapWeb", "url:\n"+url);
-        List<Photo> photoList = new ArrayList<>();
+        List<Photo> photoList = null;
         if (url != null && url.length() > 0) {
             try {
-                Document doc = Jsoup.parse(new URL(url).openStream(), "euc-kr", url);
-//                Elements datas = doc.select("img");
-//                for (Element data : datas) {
-//                    String src = data.attr("src");
-//                    String clazz = data.attr("class");
-//                    if (StringUtil.isNotNull(src)) {
-//                        if (StringUtil.isNotNull(clazz) && clazz.equalsIgnoreCase("picture")) {
-//                            Photo photo = new Photo();
-//                            photo.setPath(src);
-//                            photoList.add(photo);
-//                        }
-//                    }
-//                }
-
-                Elements datas = doc.select("img[class=picture]");
-                for (Element data : datas) {
-                    String src = data.attr("src");
-                    if (StringUtil.isNotNull(src)) {
-                        Photo photo = new Photo();
-                        photo.setPath(src);
-                        photoList.add(photo);
-                    }
-                }
+                Document document = Jsoup.parse(new URL(url).openStream(), "euc-kr", url);
+                return new JsoupParserForGettyimagesgallery().getPhotoList(document);
             } catch (Exception e) {
                 e.printStackTrace();
             }
