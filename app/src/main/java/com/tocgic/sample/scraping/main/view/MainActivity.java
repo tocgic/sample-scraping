@@ -16,6 +16,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.tocgic.sample.scraping.R;
+import com.tocgic.sample.scraping.helper.StringUtil;
 import com.tocgic.sample.scraping.main.adapter.PhotoAdapter;
 import com.tocgic.sample.scraping.main.adapter.view.PhotoAdapterView;
 import com.tocgic.sample.scraping.main.dagger.DaggerMainComponent;
@@ -59,7 +60,15 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
             return true;
         });
 
-        mainPresenter.loadPhotos(Const.URL);
+        mainPresenter.startMain(Const.URL);
+    }
+
+    @Override
+    public void updateTitle(String host) {
+        if (StringUtil.isNotNull(host)) {
+            String title = String.format("%s : %s", getString(R.string.app_name), host);
+            setTitle(title);
+        }
     }
 
     @Override

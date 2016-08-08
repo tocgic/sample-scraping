@@ -31,15 +31,23 @@ public class MainPresenterImpl implements MainPresenter {
     }
 
     @Override
-    public void loadPhotos(String url) {
+    public void startMain(String url) {
+        String host = null;
         try {
             URL urlObj = new URL(url);
-            Const.HOST = urlObj.getProtocol()+ "://" + urlObj.getHost();
+            host = urlObj.getHost();
+            Const.HOST = String.format("%s://%s", urlObj.getProtocol(), host);
         } catch (MalformedURLException e) {
             e.printStackTrace();
             Const.HOST = url;
         }
 
+        view.updateTitle(host);
+        loadPhotos(url);
+    }
+
+    @Override
+    public void loadPhotos(String url) {
         Observable<ScrapResult> webPhotoObservable = Observable.defer(() -> scrapWeb.getScrapPhoto(url));
                 webPhotoObservable
                         .subscribeOn(Schedulers.io())
